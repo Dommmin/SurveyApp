@@ -18,10 +18,11 @@ class SurveyResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'title' => $this->title,
             'slug' => $this->slug,
             'is_public' => $this->is_public,
-            'created_at' => $this->created_at->toDateString()
+            'created_at' => $this->created_at->toDateString(),
+            'questions' => QuestionResource::collection($this->questions),
         ];
     }
 }

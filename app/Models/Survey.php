@@ -11,15 +11,25 @@ class Survey extends Model
 {
     use HasFactory, HasSlug;
 
-    protected $fillable = ['name', 'slug', 'is_public'];
+    const TYPE_TEXT = 'text';
+    const TYPE_RADIO = 'radio';
+
+    protected $fillable = ['title', 'slug', 'is_public'];
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug')
-//            ->doNotGenerateSlugsOnCreate()
-//            ->doNotGenerateSlugsOnUpdate()
-        ;
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    public function entries()
+    {
+        return $this->hasMany(Entry::class);
     }
 }

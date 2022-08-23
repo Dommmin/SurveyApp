@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -13,12 +14,13 @@ class SurveyFactory extends Factory
      * Define the model's default state.
      *
      * @return array<string, mixed>
+     * @throws Exception
      */
     public function definition()
     {
         return [
-            'name' => $this->faker->text(20),
-            'is_public' => true
+            'title' => $this->faker->realText(40),
+            'is_public' => random_int(0,1)
         ];
     }
 }

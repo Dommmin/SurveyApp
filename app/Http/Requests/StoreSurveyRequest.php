@@ -26,9 +26,10 @@ class StoreSurveyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:255',
+            'title' => 'required|min:3|max:255',
             'slug' => 'required|min:3|max:255|alpha_dash',
-            'is_public' => 'boolean'
+            'is_public' => 'boolean',
+            'questions' => 'array',
         ];
     }
 }

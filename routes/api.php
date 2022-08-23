@@ -18,5 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/home', [SurveyController::class, 'home']);
+
+Route::get('/survey-by-slug/{survey:slug}', [SurveyController::class, 'entry']);
+Route::post('/survey/{survey}/answer', [SurveyController::class, 'storeAnswer']);
+
+Route::get('/entries', [SurveyController::class, 'entries']);
+Route::delete('/entries/{entry}', [SurveyController::class, 'destroyEntry']);
 
 Route::apiResource('surveys', SurveyController::class);
+

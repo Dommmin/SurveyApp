@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Answer;
+use App\Models\Entry;
+use App\Models\Question;
 use App\Models\Survey;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,13 +19,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+         User::factory()->create([
+             'name' => 'Admin',
+             'email' => 'admin@example.com',
+             'password' => bcrypt('admin')
+         ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        Survey::factory(20)->create();
+        User::factory(20)->create();
+        Survey::factory(100)->create();
+        Question::factory(300)->create();
+        Entry::factory(30)->create();
+        Answer::factory(300)->create();
     }
 }
