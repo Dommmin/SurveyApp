@@ -46,7 +46,9 @@ class SurveyController extends Controller
 
     public function entry(Survey $survey)
     {
-        if ($survey->is_public === false) return abort(404);
+        if (!$survey->is_public) {
+            return abort(401);
+        }
 
         return new SurveyResource($survey);
     }
