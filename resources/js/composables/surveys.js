@@ -2,7 +2,6 @@ import {inject, ref} from "vue";
 import axios from "axios";
 import {useRouter} from "vue-router/dist/vue-router";
 
-
 export default function useSurveys() {
     const surveys = ref({});
     const survey = ref({});
@@ -31,6 +30,13 @@ export default function useSurveys() {
         axios.get('/api/survey-by-slug/' + slug)
             .then(response => {
                 survey.value = response.data.data
+            })
+            .catch(error => {
+                router.push({ name: 'home' })
+                swal({
+                    icon: 'error',
+                    title: 'Something went wrong'
+                })
             })
     };
 
@@ -123,10 +129,12 @@ export default function useSurveys() {
                     title: 'Thank you for participating'
                 })
             })
-            .catch(function (error) {
-                if (error.response && error.response.status === 400) {
-                    console.log(error)
-                }
+            .catch(error => {
+                router.push({ name: 'home' })
+                swal({
+                    icon: 'error',
+                    title: 'You already participated in this survey!'
+                })
             })
     };
 
