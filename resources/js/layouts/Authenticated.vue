@@ -24,15 +24,9 @@
                             </router-link>
                         </div>
                     </div>
-<!--                    <div class="flex items-center">-->
-<!--                        <div>-->
-<!--                            <div>Hi, {{ user.name }}</div>-->
-<!--                            <div class="text-sm text-gray-500">{{ user.email }}</div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <button @click="logout" type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 ml-4" :class="{ 'opacity-25': processing }" :disabled="processing">-->
-<!--                        Log out-->
-<!--                    </button>-->
+                    <button @click="logout" type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 ml-4" :class="{ 'opacity-25': processing }" :disabled="processing">
+                        Log out
+                    </button>
                 </div>
             </div>
         </nav>
@@ -62,11 +56,37 @@
 </template>
 
 <script setup>
-import {computed} from "vue";
-
+import {computed, onMounted, ref} from "vue";
 import {useRoute} from "vue-router/dist/vue-router";
+import {mapActions} from "vuex";
+import store from '@/store'
+import router from "@/routes";
+
 const route = useRoute()
 const currentPageTitle = computed( () => {
     return route.meta.title
 })
+
+const name = ref({
+    user: store.state.auth.user
+})
+
+const map = async () => {
+    mapActions({
+        signOut: 'auth/logout'
+    })
+}
+
+const logout = () =>
+{
+    axios.post('/logout').then(({data}) => {
+        map.signOut
+        router.push({ name: 'home' })
+    })
+}
+
+onMounted(() => {
+    map()
+})
+
 </script>
